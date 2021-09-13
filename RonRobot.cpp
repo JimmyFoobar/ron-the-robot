@@ -13,24 +13,62 @@ int addiere(int a, int b) {
 int dividieren(int a, int b) {
 	return a - b;
 }
+int grenzwert(int punkte) {
+	int max;
+	max = ((punkte + 3) / 3) * 10;
+	return max;
+}
+int rechne(int punkte) {
+	int zzahl1, zzahl2, ergebnis, eingabe, min, max;
+	max = grenzwert(punkte);
+	min = max - 10;
+	//printf("\n %i %i %i", max, min, punkte);
+generator:
+	srand(time(NULL));
+	zzahl1 = rand() % max;
+	zzahl2 = rand() % max;
+	ergebnis = addiere(zzahl1, zzahl2);
+	if (ergebnis <= max && ergebnis >= min) {
+		printf("\n> OK, Was ergibt %i + %i?\n",  zzahl1, zzahl2);
+		scanf_s("%i", &eingabe);
+		ergebnis = addiere(zzahl1, zzahl2);
+		if (ergebnis == eingabe) {
+			punkte++;
+			printf("\n> Richtig. Du hast jetzt %i Punkte", punkte);
+		}
+		else
+			printf("\n> Leider nicht korrekt. %i + %i = %i", zzahl1, zzahl2, ergebnis);
+		return punkte;
+	}
+	else
+		goto generator;
+}
+
+
+
 
 int main() {
+
 	char name[10];
+	int weiter, punkte=0;
+	//char weiter;
 	printf("\n> Hallo ich bin Ron the Robot! \n> und wie heisst du?\n");
 	gets_s(name);
-	printf("\n> Hi %s schoen dich kennenzulernen.\n> Moechtest du mit mir addieren?\n", name);
-	int zzahl1, zzahl2,ergebnis, eingabe;
-	srand(time(NULL));
-	zzahl1 = rand() % 10;
-	zzahl2 = rand() % 10;
-	printf("\n> OK, %s Was ergibt %i + %i?\n", name, zzahl1, zzahl2);
-	scanf_s("%i", &eingabe);
-	ergebnis = addiere(zzahl1, zzahl2);
-	if (ergebnis == eingabe)
-		printf("\n> Richtig");
-	else
-		printf("\n> Leider nicht korrekt. %i + %i = %i", zzahl1, zzahl2, ergebnis);
+	printf("\n> Hi %s schoen dich kennenzulernen.\n> Moechtest du mit mir addieren? (j/n)\n", name);
+	//weiter = getchar();
+	scanf("%i", &weiter);
+
+	
+	while (weiter==1) {
+		punkte = rechne(punkte);
+		printf("\n Mochtest du noch eine Aufgabe? (j/n)\n");
+		//weiter = getchar();
+		scanf("%i", &weiter);
+	}
+	printf("\n Good Bye");
 }
+
+
 
 // Programm ausführen: STRG+F5 oder Menüeintrag "Debuggen" > "Starten ohne Debuggen starten"
 //Neu
