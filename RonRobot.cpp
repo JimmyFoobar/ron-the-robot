@@ -7,38 +7,39 @@
 #include <time.h>
 #include <string.h>
 
-int addiere(int a, int b) {
+
+int addup(int a, int b) {
 	return a + b;
 }
-int dividieren(int a, int b) {
+int subtract(int a, int b) {
 	return a - b;
 }
-int grenzwert(int punkte) {
+int boundary(int score) {
 	int max;
-	max = ((punkte + 3) / 3) * 10;
+	max = ((score + 3) / 3) * 10;
 	return max;
 }
-int rechne(int punkte) {
-	int zzahl1, zzahl2, ergebnis, eingabe, min, max;
-	max = grenzwert(punkte);
+int calc(int score) {
+	int rnum1, rnum2, result, input, min, max;
+	max = boundary(score);
 	min = max - 10;
-	//printf("\n %i %i %i", max, min, punkte);
+	//printf("\n %i %i %i", max, min, score);
 generator:
 	srand(time(NULL));
-	zzahl1 = rand() % max;
-	zzahl2 = rand() % max;
-	ergebnis = addiere(zzahl1, zzahl2);
-	if (ergebnis <= max && ergebnis >= min) {
-		printf("\n> OK, Was ergibt %i + %i?\n",  zzahl1, zzahl2);
-		scanf_s("%i", &eingabe);
-		ergebnis = addiere(zzahl1, zzahl2);
-		if (ergebnis == eingabe) {
-			punkte++;
-			printf("\n> Richtig. Du hast jetzt %i Punkte", punkte);
+	rnum1= rand() % max;
+	rnum2 = rand() % max;
+	result = addup(rnum1, rnum2);
+	if (result <= max && result >= min) {
+		printf("\n> OK, Was ergibt %i + %i?\n",  rnum1, rnum2);
+		scanf_s("%i", &input);
+		result = addup(rnum1, rnum2);
+		if (result == input) {
+			score++;
+			printf("\n> Richtig. Du hast jetzt %i Punkte", score);
 		}
 		else
-			printf("\n> Leider nicht korrekt. %i + %i = %i", zzahl1, zzahl2, ergebnis);
-		return punkte;
+			printf("\n> Leider nicht korrekt. %i + %i = %i", rnum1, rnum2, result);
+		return score;
 	}
 	else
 		goto generator;
@@ -50,20 +51,20 @@ generator:
 int main() {
 
 	char name[10];
-	int weiter, punkte=0;
-	//char weiter;
+	int proceed, score=0;
+	//char proceed;
 	printf("\n> Hallo ich bin Ron the Robot! \n> und wie heisst du?\n");
 	gets_s(name);
 	printf("\n> Hi %s schoen dich kennenzulernen.\n> Moechtest du mit mir addieren? (j/n)\n", name);
-	//weiter = getchar();
-	scanf("%i", &weiter);
+	//proceed = getchar();
+	scanf("%i", &proceed);
 
 	
-	while (weiter==1) {
-		punkte = rechne(punkte);
+	while (proceed==1) {
+		score = calc(score);
 		printf("\n Mochtest du noch eine Aufgabe? (j/n)\n");
-		//weiter = getchar();
-		scanf("%i", &weiter);
+		//proceed = getchar();
+		scanf("%i", &proceed);
 	}
 	printf("\n Good Bye");
 }
